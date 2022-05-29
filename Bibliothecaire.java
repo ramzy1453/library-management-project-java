@@ -10,6 +10,13 @@ class Bibliothecaire implements Personne{
         this.nom = nom;
         this.prenom = prenom;
     }
+    public void sePresenter(){
+        System.out.println(
+            "ID : " + this.id_bibliothecaire + "\n"
+            + "fullname : " + this.getFullName() + "\n"
+        );
+
+    }
 
     public void modifierAdherants(String id_adherants, Adherants newAdherants){
         Adherants adherant = Bibliotheque.AdherantsLists.get(id_adherants);
@@ -17,12 +24,12 @@ class Bibliothecaire implements Personne{
             System.out.println("Adherant non existant");
         }
         else{
-            adherant = newAdherants;
+            Bibliotheque.AdherantsLists.replace(adherant.getId_Adherants(), adherant, newAdherants);
             System.out.println("Modification avec succes.");
         }
     }
 
-    public void suprimerAdherants(String id_adherants, Adherants newAdherants){
+    public void suprimerAdherants(String id_adherants){
         Adherants adherant = Bibliotheque.AdherantsLists.get(id_adherants);
         if(adherant == null){
             System.out.println("Adherant non existant");
@@ -38,11 +45,11 @@ class Bibliothecaire implements Personne{
             System.out.println("Adherant non existant");
         }
         else{
-            media = newMedia;
+            Bibliotheque.MediasLists.replace(media.getId_media(), media, newMedia);
             System.out.println("Modification avec succes.");
         }
     }
-    public void suprimerMedia(String id_media, Media newMedia){
+    public void suprimerMedia(String id_media){
         Media media = Bibliotheque.MediasLists.get(id_media);
         if(media == null){
             System.out.println("Adherant non existant");
@@ -55,20 +62,37 @@ class Bibliothecaire implements Personne{
 
     public void afficheAdherantsLists(){
         for(Adherants member : Bibliotheque.AdherantsLists.values()){
-            member.presenterClient();
+            member.sePresenter();
+        }
+        if(Bibliotheque.AdherantsLists.size() == 0){
+            System.out.println("Liste vide.\n");
         }
     }
+    public void modifierBibliothecaire(String newName, String newPrenom , String newMat){
+        this.id_bibliothecaire = newMat;
+        this.nom = newName;
+        this.prenom = newPrenom;
+        System.out.println("Modification avec succes.");
+    }    
     public void afficheBlackList(){
         System.out.println("Black list : \n");
+        boolean bool = false;
         for(Adherants member : Bibliotheque.AdherantsLists.values()){
             if(member.getIsInBlackList()){
-                member.presenterClient();
+                member.sePresenter();
+                bool = true;
             }
+        }
+        if(!bool){
+            System.out.println("Black list vide.\n");
         }
     }
     public void afficheMediasLists(){
         for(Media media : Bibliotheque.MediasLists.values()){
             media.consultation();
+        }
+        if(Bibliotheque.MediasLists.size() == 0){
+            System.out.println("Liste vide.\n");
         }
     }
     public void afficheEmpruntsLists(){

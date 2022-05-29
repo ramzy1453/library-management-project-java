@@ -13,7 +13,7 @@ class Adherants implements Personne {
         this.prenom = prenom;
         this.isInBlackList = false;
     }
-    public void presenterClient(){
+    public void sePresenter(){
         System.out.println(
             "ID : " + this.id_Adherants + "\n"
             + "fullname : " + this.getFullName() + "\n"
